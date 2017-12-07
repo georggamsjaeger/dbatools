@@ -1,25 +1,23 @@
-Function Get-SmoServerForDynamicParams
-{
+function Get-SmoServerForDynamicParams {
+	##############################
+	# THIS DOES NOT SEEM TO BE USED
+	##############################
 	if ($fakeBoundParameter.length -eq 0) { return }
-	
-	$sqlserver = $fakeBoundParameter['SqlServer']
+
+	$SqlInstance = $fakeBoundParameter['SqlInstance']
 	$sqlcredential = $fakeBoundParameter['SqlCredential']
-	
-	if ($sqlserver -eq $null)
-	{
-		$sqlserver = $fakeBoundParameter['sqlinstance']
+
+	if ($null -eq $SqlInstance) {
+		$SqlInstance = $fakeBoundParameter['sqlinstance']
 	}
-	if ($sqlserver -eq $null)
-	{
-		$sqlserver = $fakeBoundParameter['source']
+	if ($null -eq $SqlInstance) {
+		$SqlInstance = $fakeBoundParameter['source']
 	}
-	if ($sqlcredential -eq $null)
-	{
+	if ($null -eq $sqlcredential) {
 		$sqlcredential = $fakeBoundParameter['Credential']
 	}
-	
-	if ($sqlserver)
-	{
-		Connect-SqlServer -SqlServer $sqlserver -SqlCredential $SqlCredential -ParameterConnection
+
+	if ($SqlInstance) {
+		Connect-SqlInstance -SqlInstance $SqlInstance -SqlCredential $SqlCredential -ParameterConnection
 	}
 }
