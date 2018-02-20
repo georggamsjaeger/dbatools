@@ -146,6 +146,14 @@ function Export-DbaXECsv {
 
             try {
                 $adapter.Convert()
+                $file = Get-ChildItem -Path $adapter.OutputFile
+                
+                if ($file.Length -eq 0) {
+                    Remove-Item -Path $adapter.OutputFile
+                }
+                else {
+                    $file
+                }
             }
             catch {
                 Stop-Function -Message "Failure" -ErrorRecord $_ -Target "XESmartTarget" -Continue
